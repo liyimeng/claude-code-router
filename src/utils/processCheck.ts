@@ -1,12 +1,11 @@
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import { PID_FILE, REFERENCE_COUNT_FILE } from '../constants';
 import { readConfigFile } from '.';
-import find from 'find-process';
 
 export async function isProcessRunning(pid: number): Promise<boolean> {
     try {
-        const processes = await find('pid', pid);
-        return processes.length > 0;
+        console.log(`[DEBUG] Check process with PID: /proc/${pid}`);  
+        return existsSync(`/proc/${pid}`);
     } catch (error) {
         return false;
     }
